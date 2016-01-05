@@ -1,0 +1,7 @@
+.loadedItem {
+    background-color: green;
+}
+
+.unloadedItem {
+    background-color: white;
+}
