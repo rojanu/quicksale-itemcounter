@@ -11,11 +11,14 @@
     <script type="text/javascript" src="main.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css"/>
 </head>
-<body onload="addInventoryFileButton();addQuoteFileButton();">
-Inventory:
-<div id="inventoryFileContainer"></div>
-Quote File:
-<div id="quoteFileContainer"></div>
+<body onload="addQuoteFileButton();">
+<div id="inventoryFileContainer">
+    Inventory: <span id="inventoryFile"></span>
+</div>
+<div id="quoteFileContainer">
+    Quote File: <span id="quoteFile"></span>
+    <div id="quoteFileButton"></div>
+</div>
 <table id="itemTable" border="1">
     <thead>
     <tr>

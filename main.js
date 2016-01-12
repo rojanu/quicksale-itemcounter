@@ -1,35 +1,43 @@
+var inventoryFile = 'Inventory_03-01-2016.csv';
 var inventory = {};
-function addInventoryFileButton() {
-  options = {
-    success: function(files) {
-      Papa.parse(files[0].link, {
-        download: true,
+function readInventory(itemListFile, itemResults, callback) {
+  jQuery.ajax({
+    type:    "GET",
+    url:     inventoryFile,
+    success: function(text) {
+      Papa.parse(text, {
         header: true,
         complete: function(results) {
+          jQuery('#inventoryFile').text(inventoryFile);
           inventory = generateInventory(results.data);
+          callback(itemListFile, itemResults);
         }
       });
     },
-    cancel: function() {
-    },
-    linkType: "direct",
-    multiselect: false,
-    extensions: ['.csv']
-  };
-  var button = Dropbox.createChooseButton(options);
-  document.getElementById("inventoryFileContainer").appendChild(button);
+    error:   function() {
+      // An error occurred
+    }
+  });
+}
+
+function invokeItemList(itemListFile, results) {
+  jQuery('#quoteFile').text(itemListFile);
+  var dataSet = generateItemList(results.data);
+  drawTable(dataSet);
+}
+function readItemList(itemListFile) {
+  Papa.parse(itemListFile, {
+    download: true,
+    header: true,
+    complete: function(results) {
+      readInventory(itemListFile, results, invokeItemList);
+    }
+  });
 }
 function addQuoteFileButton() {
   options = {
     success: function(files) {
-      Papa.parse(files[0].link, {
-        download: true,
-        header: true,
-        complete: function(results) {
-          var dataSet = generateItemList(results.data);
-          drawTable(dataSet);
-        }
-      });
+      readItemList(files[0].link);
     },
     cancel: function() {
     },
@@ -38,18 +46,7 @@ function addQuoteFileButton() {
     extensions: ['.csv']
   };
   var button = Dropbox.createChooseButton(options);
-  document.getElementById("quoteFileContainer").appendChild(button);
-}
-function load() {
-  var fileInput = document.getElementById("data");
-
-  Papa.parse(fileInput.files[0], {
-    header: true,
-    complete: function(results) {
-      var dataSet = generateItemList(results.data);
-      drawTable(dataSet);
-    }
-  });
+  document.getElementById("quoteFileButton").appendChild(button);
 }
 
 function generateInventory(data) {
