@@ -1,36 +1,31 @@
 var inventoryFile = 'Inventory_03-01-2016.csv';
-var inventory = {};
-function readInventory(itemListFile, itemResults, callback) {
+function readInventory(itemResults) {
   jQuery.ajax({
-    type:    "GET",
-    url:     inventoryFile,
+    type: "GET",
+    url: inventoryFile,
     success: function(text) {
       Papa.parse(text, {
         header: true,
         complete: function(results) {
           jQuery('#inventoryFile').text(inventoryFile);
           inventory = generateInventory(results.data);
-          callback(itemListFile, itemResults);
+          drawTable(generateItemList(itemResults, inventory));
         }
       });
     },
-    error:   function() {
+    error: function() {
       // An error occurred
     }
   });
 }
 
-function invokeItemList(itemListFile, results) {
-  jQuery('#quoteFile').text(itemListFile);
-  var dataSet = generateItemList(results.data);
-  drawTable(dataSet);
-}
 function readItemList(itemListFile) {
   Papa.parse(itemListFile, {
     download: true,
     header: true,
     complete: function(results) {
-      readInventory(itemListFile, results, invokeItemList);
+      jQuery('#quoteFile').text(itemListFile);
+      readInventory(results.data);
     }
   });
 }
@@ -61,7 +56,7 @@ function generateInventory(data) {
   return inventory;
 }
 
-function generateItemList(data) {
+function generateItemList(data, inventory) {
   var itemList = {};
   for (var i = 0; i < data.length; i++) {
     var item = data[i];
@@ -94,8 +89,10 @@ function drawTable(data) {
       row.append($('<td/>').html(item.id));
       row.append($('<td/>').html(item.name));
       row.append($('<td/>').html(item.quantity));
-      var itemLoadedCheck = $('<input />', {type: 'checkbox', id: 'loaded' + item.id}).change(function() {
-        document.getElementById('row' + item.id).className = !this.checked ? 'unloadedItem' : 'loadedItem';
+      var itemLoadedCheck = $('<input />',
+        {type: 'checkbox', id: 'loaded' + item.id}).change(function() {
+        document.getElementById('row' + item.id).className =
+          !this.checked ? 'unloadedItem' : 'loadedItem';
       });
       row.append($("<td/>").append(itemLoadedCheck));
       itemTable.append(row);
