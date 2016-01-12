@@ -7,7 +7,7 @@ function readInventory(itemResults) {
       Papa.parse(text, {
         header: true,
         complete: function(results) {
-          jQuery('#inventoryFile').text(inventoryFile);
+          jQuery('#inventoryFile').text(inventoryFile.substr(inventoryFile.lastIndexOf("/") + 1));
           inventory = generateInventory(results.data);
           drawTable(generateItemList(itemResults, inventory));
         }
@@ -24,7 +24,8 @@ function readItemList(itemListFile) {
     download: true,
     header: true,
     complete: function(results) {
-      jQuery('#quoteFile').text(itemListFile);
+      jQuery('#quoteFile').text(decodeURIComponent(
+        itemListFile.substr(itemListFile.lastIndexOf("/") + 1)));
       readInventory(results.data);
     }
   });
@@ -91,9 +92,11 @@ function drawTable(data) {
       row.append($('<td/>').html(item.quantity));
       var itemLoadedCheck = $('<input />',
         {type: 'checkbox', id: 'loaded' + item.id}).change(function() {
-        document.getElementById('row' + item.id).className =
-          !this.checked ? 'unloadedItem' : 'loadedItem';
-      });
+                                                             document.getElementById('row'
+                                                                                     + item.id).className =
+                                                               !this.checked ? 'unloadedItem'
+                                                                 : 'loadedItem';
+                                                           });
       row.append($("<td/>").append(itemLoadedCheck));
       itemTable.append(row);
     });
