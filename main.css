@@ -5,3 +5,11 @@
 .unloadedItem {
     background-color: white;
 }
+
+#itemTable {
+    border: 1px dashed #cccccc;
+    border-collapse: collapse;
+}
+#itemTable td {
+    border: 1px dashed #cccccc;
+}
