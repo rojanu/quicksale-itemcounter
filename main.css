@@ -29,6 +29,6 @@
     text-align: center;
 }
 
-table caption {
+table, caption {
     background-color: blue;
 }
