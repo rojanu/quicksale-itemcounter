@@ -28,3 +28,7 @@
     font-size: large;
     text-align: center;
 }
+
+table caption {
+    background-color: blue;
+}
