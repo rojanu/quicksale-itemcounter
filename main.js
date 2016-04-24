@@ -1,4 +1,4 @@
-var inventoryFile = 'Inventory_03-01-2016.csv';
+var inventoryFile = 'Inventory_24-04-2016.csv';
 function readInventory(itemResults) {
   jQuery.ajax({
     type: "GET",
@@ -81,13 +81,23 @@ function generateItemList(data, inventory) {
 }
 
 function drawTable(data) {
-  var itemTable = $("#itemTable").find('tbody');
-  itemTable.find("tr").remove();
+  var allItems = $("#allItems");
+  allItems.empty();
   jQuery.each(data, function(category, items) {
+    var categoryTable = $('<table/>', {id: category + 'Table', class: 'categoryTable'});
+    categoryTable.append($('<caption/>').html(category));
+    var headerRow = $('<tr/>', {id: 'headerRow'});
+    headerRow.append($('<th/>').html('Id'));
+    headerRow.append($('<th/>').html('Category'));
+    headerRow.append($('<th/>').html('Name'));
+    headerRow.append($('<th/>').html('Quantity'));
+    headerRow.append($('<th/>').html('Loaded'));
+    categoryTable.append(headerRow);
+
     jQuery.each(items, function(key, item) {
       var row = $('<tr/>', {id: 'row' + item.id, class: 'unloadedItem'});
-      row.append($('<td/>').html(category));
       row.append($('<td/>').html(item.id));
+      row.append($('<td/>').html(category));
       row.append($('<td/>').html(item.name));
       row.append($('<td/>').html(item.quantity));
       var itemLoadedCheck = $('<input />',
@@ -98,7 +108,8 @@ function drawTable(data) {
                                                                  : 'loadedItem';
                                                            });
       row.append($("<td/>").append(itemLoadedCheck));
-      itemTable.append(row);
+      categoryTable.append(row);
     });
+    allItems.append(categoryTable);
   });
 }

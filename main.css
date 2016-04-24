@@ -6,10 +6,16 @@
     background-color: white;
 }
 
-#itemTable {
+.categoryTable {
     border: 1px dashed #cccccc;
     border-collapse: collapse;
 }
-#itemTable td {
+.categoryTable td {
     border: 1px dashed #cccccc;
+}
+
+.categoryRow {
+    font-style: italic;
+    font-size: large;
+    text-align: center;
 }
