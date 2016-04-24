@@ -1,22 +1,23 @@
 var inventoryFile = 'Inventory_24-04-2016.csv';
 function readInventory(itemResults) {
   jQuery.ajax({
-    type: "GET",
-    url: inventoryFile,
-    success: function(text) {
-      Papa.parse(text, {
-        header: true,
-        complete: function(results) {
-          jQuery('#inventoryFile').text(inventoryFile.substr(inventoryFile.lastIndexOf("/") + 1));
-          inventory = generateInventory(results.data);
-          drawTable(generateItemList(itemResults, inventory));
-        }
-      });
-    },
-    error: function() {
-      // An error occurred
-    }
-  });
+                type: "GET",
+                url: inventoryFile,
+                success: function(text) {
+                  Papa.parse(text, {
+                    header: true,
+                    complete: function(results) {
+                      jQuery('#inventoryFile').text(
+                        inventoryFile.substr(inventoryFile.lastIndexOf("/") + 1));
+                      inventory = generateInventory(results.data);
+                      drawTable(generateItemList(itemResults, inventory));
+                    }
+                  });
+                },
+                error: function() {
+                  // An error occurred
+                }
+              });
 }
 
 function readItemList(itemListFile) {
@@ -84,6 +85,7 @@ function drawTable(data) {
   var allItems = $("#allItems");
   allItems.empty();
   jQuery.each(data, function(category, items) {
+    allItems.append($('</div>', {class: 'page-break'}));
     var categoryTable = $('<table/>', {id: category + 'Table', class: 'categoryTable'});
     categoryTable.append($('<caption/>').html(category));
     var headerRow = $('<tr/>', {id: 'headerRow'});
@@ -99,12 +101,12 @@ function drawTable(data) {
       row.append($('<td/>').html(item.name));
       row.append($('<td/>').html(item.quantity));
       var itemLoadedCheck = $('<input />',
-        {type: 'checkbox', id: 'loaded' + item.id}).change(function() {
-                                                             document.getElementById('row'
-                                                                                     + item.id).className =
-                                                               !this.checked ? 'unloadedItem'
-                                                                 : 'loadedItem';
-                                                           });
+                              {type: 'checkbox', id: 'loaded' + item.id}).change(function() {
+        document.getElementById('row'
+                                + item.id).className =
+          !this.checked ? 'unloadedItem'
+            : 'loadedItem';
+      });
       row.append($("<td/>").append(itemLoadedCheck));
       categoryTable.append(row);
     });

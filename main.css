@@ -1,3 +1,11 @@
+@media all {
+    .page-break	{ display: none; }
+}
+
+@media print {
+    .page-break	{ display: block; page-break-before: always; }
+}
+
 .loadedItem {
     background-color: green;
 }
@@ -12,6 +20,7 @@
 }
 .categoryTable td {
     border: 1px dashed #cccccc;
+    padding-right: 20px;
 }
 
 .categoryRow {
