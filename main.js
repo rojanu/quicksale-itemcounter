@@ -88,7 +88,6 @@ function drawTable(data) {
     categoryTable.append($('<caption/>').html(category));
     var headerRow = $('<tr/>', {id: 'headerRow'});
     headerRow.append($('<th/>').html('Id'));
-    headerRow.append($('<th/>').html('Category'));
     headerRow.append($('<th/>').html('Name'));
     headerRow.append($('<th/>').html('Quantity'));
     headerRow.append($('<th/>').html('Loaded'));
@@ -97,7 +96,6 @@ function drawTable(data) {
     jQuery.each(items, function(key, item) {
       var row = $('<tr/>', {id: 'row' + item.id, class: 'unloadedItem'});
       row.append($('<td/>').html(item.id));
-      row.append($('<td/>').html(category));
       row.append($('<td/>').html(item.name));
       row.append($('<td/>').html(item.quantity));
       var itemLoadedCheck = $('<input />',
