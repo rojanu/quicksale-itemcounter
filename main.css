@@ -29,7 +29,7 @@
     text-align: center;
 }
 
-caption {
+.categoryTable caption {
     background-color: red;
     color: yellow;
     font-weight: bold;
