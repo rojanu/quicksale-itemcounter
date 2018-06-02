@@ -1,4 +1,4 @@
-var inventoryFile = 'inventory-21-10-2017.csv';
+var inventoryFile = 'Inventory-21-10-2017.csv';
 function readInventory(itemResults) {
   jQuery.ajax({
                 type: "GET",
